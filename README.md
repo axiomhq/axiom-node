@@ -4,6 +4,8 @@
 [![Latest Release][release_badge]][release]
 [![License][license_badge]][license]
 
+![](https://repobeats.axiom.co/api/embed/vercel/hyper.svg)
+
 ---
 
 ## Table of Contents
