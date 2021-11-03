@@ -4,7 +4,7 @@ import nock from 'nock';
 import { notifiers } from '../../lib/notifiers';
 
 describe('NotifiersService', () => {
-    const client = new notifiers.Service('http://axiom-node.dev.local');
+    const client = new notifiers.Service('http://axiom-node.dev.local', 'foo-bar');
 
     beforeEach(() => {
         const notifiers = [

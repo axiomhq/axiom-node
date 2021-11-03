@@ -10,7 +10,7 @@ import { tokens } from '../../lib/tokens';
 // implementation works against both endpoints.
 
 describe('TokensService', () => {
-    const client = new tokens.PersonalService('http://axiom-node.dev.local');
+    const client = new tokens.PersonalService('http://axiom-node.dev.local', 'foo-bar');
 
     beforeEach(() => {
         const tokens = [

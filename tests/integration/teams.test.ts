@@ -1,9 +1,13 @@
 import { expect } from 'chai';
 
-import { teams } from '../../lib/teams';
+import { CloudURL, teams } from '../../lib';
+
+const url = process.env.AXIOM_URL || CloudURL;
+const token = process.env.AXIOM_TOKEN!;
+const orgId = process.env.AXIOM_ORG_ID;
 
 describe('TeamsService', () => {
-    const client = new teams.Service();
+    const client = new teams.Service(url, token, orgId);
 
     let team: teams.Team;
 

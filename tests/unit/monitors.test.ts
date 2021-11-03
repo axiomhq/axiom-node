@@ -4,7 +4,7 @@ import nock from 'nock';
 import { monitors } from '../../lib/monitors';
 
 describe('MonitorsService', () => {
-    const client = new monitors.Service('http://axiom-node.dev.local');
+    const client = new monitors.Service('http://axiom-node.dev.local', 'foo-bar');
 
     beforeEach(() => {
         const monitors = [

@@ -5,7 +5,7 @@ import { datasets } from '../../lib/datasets';
 import { starred } from '../../lib/starred';
 
 describe('DatasetsService', () => {
-    const client = new datasets.Service('http://axiom-node.dev.local');
+    const client = new datasets.Service('http://axiom-node.dev.local', 'foo-bar');
 
     beforeEach(() => {
         const stats = {

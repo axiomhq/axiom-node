@@ -4,20 +4,6 @@
 [![Latest Release][release_badge]][release]
 [![License][license_badge]][license]
 
----
-
-## Table of Contents
-
-1. [Introduction](#introduction)
-1. [Installation](#installation)
-1. [Authentication](#authentication)
-1. [Usage](#usage)
-1. [Documentation](#documentation)
-1. [Contributing](#contributing)
-1. [License](#license)
-
-## Introduction
-
 Axiom Node is a NodeJS package for accessing the [Axiom](https://www.axiom.co/)
 API.
 
@@ -55,14 +41,20 @@ for.
 ## Usage
 
 ```ts
-// Export `AXIOM_TOKEN` and `AXIOM_ORG_ID` for Axiom Cloud
-// Export `AXIOM_URL` and `AXIOM_TOKEN` for Axiom Selfhost
+import Client, { CloudURL } from '@axiomhq/axiom-node';
 
-import Client from '@axiomhq/axiom-node';
+const token = process.env.AXIOM_TOKEN;
 
-const client = new Client();
+// For Axiom Cloud
+const orgId = process.env.AXIOM_ORG_ID;
+const client = new Client(CloudURL, token, orgId)
 
-// ...
+// For Axiom Selfhost
+const url = process.env.AXIOM_URL;
+const client = new Client(url, token);
+
+// List datasets
+const datasets = await client.datasets.list();
 ```
 
 For more sample code snippets, head over to the [examples](examples) directory.

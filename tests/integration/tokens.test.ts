@@ -1,9 +1,13 @@
 import { expect } from 'chai';
 
-import { tokens } from '../../lib/tokens';
+import { CloudURL, tokens } from '../../lib';
+
+const url = process.env.AXIOM_URL || CloudURL;
+const axiomToken = process.env.AXIOM_TOKEN!;
+const orgId = process.env.AXIOM_ORG_ID;
 
 describe('IngestTokensService', () => {
-    const client = new tokens.IngestService();
+    const client = new tokens.IngestService(url, axiomToken, orgId);
 
     let token: tokens.Token;
 
@@ -65,7 +69,7 @@ describe('IngestTokensService', () => {
 });
 
 describe('PersonalTokensService', () => {
-    const client = new tokens.PersonalService();
+    const client = new tokens.PersonalService(url, axiomToken, orgId);
 
     let token: tokens.Token;
 

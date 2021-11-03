@@ -1,14 +1,16 @@
 import { expect } from 'chai';
 
-import { datasets } from '../../lib/datasets';
-import { starred } from '../../lib/starred';
+import { CloudURL, datasets, starred } from '../../lib';
 
 const datasetSuffix = process.env.AXIOM_DATASET_SUFFIX || 'local';
+const url = process.env.AXIOM_URL || CloudURL;
+const token = process.env.AXIOM_TOKEN!;
+const orgId = process.env.AXIOM_ORG_ID;
 
 describe('StarredQueriesService', () => {
     const datasetName = `test-axiom-node-starred-queries-${datasetSuffix}`;
-    const datasetsClient = new datasets.Service();
-    const client = new starred.Service();
+    const datasetsClient = new datasets.Service(url, token, orgId);
+    const client = new starred.Service(url, token, orgId);
 
     let dataset: datasets.Dataset;
     let query: starred.StarredQuery;

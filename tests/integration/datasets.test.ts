@@ -1,13 +1,16 @@
 import { expect } from 'chai';
 import { gzip } from 'zlib';
 
-import { datasets } from '../../lib/datasets';
+import { CloudURL, datasets } from '../../lib';
 
 const datasetSuffix = process.env.AXIOM_DATASET_SUFFIX || 'local';
+const url = process.env.AXIOM_URL || CloudURL;
+const token = process.env.AXIOM_TOKEN!;
+const orgId = process.env.AXIOM_ORG_ID;
 
 describe('DatasetsService', () => {
     const datasetName = `test-axiom-node-dataset-${datasetSuffix}`;
-    const client = new datasets.Service();
+    const client = new datasets.Service(url, token, orgId);
 
     before(async () => {
         await client.create({

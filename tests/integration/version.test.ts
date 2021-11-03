@@ -1,9 +1,13 @@
 import { expect } from 'chai';
 
-import { version } from '../../lib/version';
+import { CloudURL, version } from '../../lib';
+
+const url = process.env.AXIOM_URL || CloudURL;
+const token = process.env.AXIOM_TOKEN!;
+const orgId = process.env.AXIOM_ORG_ID;
 
 describe('VersionService', () => {
-    const client = new version.Service();
+    const client = new version.Service(url, token, orgId);
 
     describe('get', () => {
         it('should get a version', async () => {

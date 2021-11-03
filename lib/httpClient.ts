@@ -5,11 +5,7 @@ export const CloudURL = 'https://cloud.axiom.co';
 export default abstract class HTTPClient {
     protected readonly client: AxiosInstance;
 
-    constructor(
-        basePath: string = process.env.AXIOM_URL || CloudURL,
-        accessToken: string = process.env.AXIOM_TOKEN || '',
-        orgID: string = process.env.AXIOM_ORG_ID || '',
-    ) {
+    constructor(basePath: string, accessToken: string, orgID?: string) {
         this.client = axios.create({
             baseURL: basePath,
             timeout: 30000,

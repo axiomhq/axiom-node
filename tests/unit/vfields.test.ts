@@ -5,7 +5,7 @@ import { CloudURL } from '../../lib';
 import { vfields } from '../../lib/vfields';
 
 describe('VirtualFieldsService', () => {
-    const client = new vfields.Service('http://axiom-node.dev.local');
+    const client = new vfields.Service('http://axiom-node.dev.local', 'foo-bar');
 
     beforeEach(() => {
         const vfields = [

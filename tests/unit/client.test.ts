@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import Client from '../../lib/client';
 
 describe('Client', () => {
-    const client = new Client();
+    const client = new Client('http://axiom-node.dev.local', 'foo-bar');
     expect(client).not.equal('undefined');
 
     it('Services', () => {

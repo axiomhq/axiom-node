@@ -5,7 +5,7 @@ import { CloudURL } from '../../lib';
 import { version } from '../../lib/version';
 
 describe('VersionsService', () => {
-    const client = new version.Service('http://axiom-node.dev.local');
+    const client = new version.Service('http://axiom-node.dev.local', 'foo-bar');
 
     beforeEach(() => {
         const response = {

@@ -5,7 +5,7 @@ import { CloudURL } from '../../lib';
 import { users } from '../../lib/users';
 
 describe('UsersService', () => {
-    const client = new users.Service('http://axiom-node.dev.local');
+    const client = new users.Service('http://axiom-node.dev.local', 'foo-bar');
 
     beforeEach(() => {
         const currentUser = {

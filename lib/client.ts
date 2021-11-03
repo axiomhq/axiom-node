@@ -22,7 +22,7 @@ export default class Client {
     version: version.Service;
     virtualFields: vfields.Service;
 
-    constructor(basePath?: string, accessToken?: string, orgID?: string) {
+    constructor(basePath: string, accessToken: string, orgID?: string) {
         this.datasets = new datasets.Service(basePath, accessToken, orgID);
         this.monitors = new monitors.Service(basePath, accessToken, orgID);
         this.notifiers = new notifiers.Service(basePath, accessToken, orgID);

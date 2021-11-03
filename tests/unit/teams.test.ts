@@ -5,7 +5,7 @@ import { CloudURL } from '../../lib';
 import { teams } from '../../lib/teams';
 
 describe('TeamsService', () => {
-    const client = new teams.Service('http://axiom-node.dev.local');
+    const client = new teams.Service('http://axiom-node.dev.local', 'foo-bar');
 
     beforeEach(() => {
         const teams = [

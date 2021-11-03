@@ -17,7 +17,7 @@ export namespace tokens {
     class Service extends HTTPClient {
         protected readonly localPath: string;
 
-        constructor(localPath: string, basePath?: string, accessToken?: string, orgID?: string) {
+        constructor(localPath: string, basePath: string, accessToken: string, orgID?: string) {
             super(basePath, accessToken, orgID);
 
             this.localPath = localPath;
@@ -52,7 +52,7 @@ export namespace tokens {
     }
 
     export class IngestService extends Service {
-        constructor(basePath?: string, accessToken?: string, orgID?: string) {
+        constructor(basePath: string, accessToken: string, orgID?: string) {
             super('/api/v1/tokens/ingest', basePath, accessToken, orgID);
         }
 
@@ -63,7 +63,7 @@ export namespace tokens {
     }
 
     export class PersonalService extends Service {
-        constructor(basePath?: string, accessToken?: string, orgID?: string) {
+        constructor(basePath: string, accessToken: string, orgID?: string) {
             super('/api/v1/tokens/personal', basePath, accessToken, orgID);
         }
     }

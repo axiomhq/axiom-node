@@ -1,9 +1,13 @@
 import { expect } from 'chai';
 
-import { notifiers } from '../../lib/notifiers';
+import { CloudURL, notifiers } from '../../lib';
+
+const url = process.env.AXIOM_URL || CloudURL;
+const token = process.env.AXIOM_TOKEN!;
+const orgId = process.env.AXIOM_ORG_ID;
 
 describe('NotifiersService', () => {
-    const client = new notifiers.Service();
+    const client = new notifiers.Service(url, token, orgId);
 
     let notifier: notifiers.Notifier;
 

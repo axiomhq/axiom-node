@@ -1,9 +1,13 @@
 import { expect } from 'chai';
 
-import { users } from '../../lib/users';
+import { CloudURL, users } from '../../lib';
+
+const url = process.env.AXIOM_URL || CloudURL;
+const token = process.env.AXIOM_TOKEN!;
+const orgId = process.env.AXIOM_ORG_ID;
 
 describe('UsersService', () => {
-    const client = new users.Service();
+    const client = new users.Service(url, token, orgId);
 
     let user: users.User;
 

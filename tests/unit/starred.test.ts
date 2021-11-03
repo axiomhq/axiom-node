@@ -5,7 +5,7 @@ import { CloudURL } from '../../lib';
 import { starred } from '../../lib/starred';
 
 describe('StarredQueriesService', () => {
-    const client = new starred.Service('http://axiom-node.dev.local');
+    const client = new starred.Service('http://axiom-node.dev.local', 'foo-bar');
 
     beforeEach(() => {
         const starred = [
