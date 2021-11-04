@@ -4,7 +4,7 @@
 [![Latest Release][release_badge]][release]
 [![License][license_badge]][license]
 
-![](http://home.njp.io:3000/api/embed/facebook/react.svg)
+![](http://home.njp.io:3000/api/embed/facebook/react.svg?foo=bar2)
 
 ---
 
