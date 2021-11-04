@@ -4,7 +4,7 @@
 [![Latest Release][release_badge]][release]
 [![License][license_badge]][license]
 
-![](https://repobeats.axiom.co/api/embed/vercel/hyper.svg)
+![](http://home.njp.io:3000/api/embed/vercel/next.js.svg)
 
 ---
 
