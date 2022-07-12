@@ -70,7 +70,7 @@ export namespace datasets {
         id: string;
         dataset: string;
         kind: starred.QueryKind;
-        // query: QueryRequest; //FIXME(lukasmalkmus): Add QueryRequest type
+        query: datasets.Query | datasets.APLQuery
         who: string;
         created: string;
     }
@@ -259,7 +259,7 @@ export namespace datasets {
         priority: string;
     }
 
-    interface APLQuery {
+    export interface APLQuery {
         apl: string;
         startTime?: string;
         endTime?: string;
