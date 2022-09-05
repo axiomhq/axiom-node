@@ -117,7 +117,7 @@ export namespace datasets {
         MakeSet = 'makeset',
         MakeSetIf = 'makesetif',
         CountIf = 'countif',
-        CountDistinctIf = 'distinctif'
+        CountDistinctIf = 'distinctif',
     }
 
     export interface Filter {
@@ -171,6 +171,16 @@ export namespace datasets {
 
     export interface QueryResult {
         buckets: Timeseries;
+        matches?: Array<Entry>;
+        status: Status;
+    }
+
+    export interface AplQueryResult {
+        request: Query;
+
+        // Copied from QueryResult
+        buckets: Timeseries;
+        datasetNames: string[];
         matches?: Array<Entry>;
         status: Status;
     }
@@ -316,9 +326,9 @@ export namespace datasets {
             options?: IngestOptions,
         ): Promise<IngestStatus> => {
             const array = Array.isArray(events) ? events : [events];
-            const json = array.map(v => JSON.stringify(v)).join("\n");
+            const json = array.map((v) => JSON.stringify(v)).join('\n');
             const encoded = await promisify(gzip)(json);
-            return this.ingestBuffer(id, encoded, ContentType.NDJSON, ContentEncoding.GZIP, options)
+            return this.ingestBuffer(id, encoded, ContentType.NDJSON, ContentEncoding.GZIP, options);
         };
 
         query = (id: string, query: Query, options?: QueryOptions): Promise<QueryResult> =>
@@ -333,10 +343,10 @@ export namespace datasets {
                     return response.data;
                 });
 
-        aplQuery = (apl: string, options?: APLQueryOptions): Promise<QueryResult> => {
+        aplQuery = (apl: string, options?: APLQueryOptions): Promise<AplQueryResult> => {
             const req: APLQuery = { apl: apl, startTime: options?.startTime, endTime: options?.endTime };
             return this.client
-                .post<QueryResult>(this.localPath + '/_apl', req, {
+                .post<AplQueryResult>(this.localPath + '/_apl', req, {
                     params: {
                         'streaming-duration': options?.streamingDuration,
                         nocache: options?.noCache,

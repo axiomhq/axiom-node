@@ -8,7 +8,7 @@ export const CloudURL = 'https://cloud.axiom.co';
 
 export default abstract class HTTPClient {
     protected readonly client: AxiosInstance;
-    limits: {[key: string]: Limit} = {};
+    limits: { [key: string]: Limit } = {};
 
     constructor(
         basePath: string = process.env.AXIOM_URL || CloudURL,
@@ -56,17 +56,20 @@ export default abstract class HTTPClient {
                     return Promise.reject(error);
                 }
 
-                const limit = parseLimitFromResponse(error.response);
-                const key = limitKey(limit.type, limit.scope);
-                this.limits[key] = limit;
+                // Some errors don't have a response (i.e. when unit-testing)
+                if (error.response) {
+                    const limit = parseLimitFromResponse(error.response);
+                    const key = limitKey(limit.type, limit.scope);
+                    this.limits[key] = limit;
 
-                if (error.response.status == 429) {
-                    return Promise.reject(new AxiomTooManyRequestsError(limit, error.response));
-                }
+                    if (error.response.status == 429) {
+                        return Promise.reject(new AxiomTooManyRequestsError(limit, error.response));
+                    }
 
-                const message = error.response.data.message;
-                if (message) {
-                    return Promise.reject(new Error(message));
+                    const message = error.response.data.message;
+                    if (message) {
+                        return Promise.reject(new Error(message));
+                    }
                 }
 
                 return Promise.reject(error);
@@ -127,16 +130,15 @@ export class AxiomTooManyRequestsError extends Error {
         }
     }
 
-    timeUntilReset(){
+    timeUntilReset() {
         const total = this.limit.reset.getTime() - new Date().getTime();
-        const seconds = Math.floor( (total/1000) % 60 );
-        const minutes = Math.floor( (total/1000/60) % 60 );
-      
+        const seconds = Math.floor((total / 1000) % 60);
+        const minutes = Math.floor((total / 1000 / 60) % 60);
+
         return {
-          total,
-          minutes,
-          seconds
+            total,
+            minutes,
+            seconds,
         };
-      }
-      
+    }
 }
