@@ -135,7 +135,7 @@ describe('Client', () => {
         headers[headerAPILimit] = '1000';
         headers[headerAPIRateRemaining] = '0';
         headers[headerAPIRateReset] = resetTimeInSeconds.toString();
-        scope.get('/api/v1/datasets').reply(200, {}, headers);
+        scope.get('/api/v1/datasets').reply(429, {}, headers);
 
         await client.datasets.list();
         expect(scope.isDone()).eq(true);
@@ -144,6 +144,7 @@ describe('Client', () => {
             await client.datasets.list();
             fail('request should return an error with status 429');
         } catch (err: any) {
+            console.log(err)
             expect(err).instanceOf(AxiomTooManyRequestsError);
             const untilReset = err.timeUntilReset();
             expect(err.message).eq(
