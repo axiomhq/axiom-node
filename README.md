@@ -29,7 +29,7 @@ npm install @axiomhq/axiom-node
 
 If you use the [Axiom CLI](https://github.com/axiomhq/cli), run `eval $(axiom config export -f)` to configure your environment variables.
 
-Otherwise create a personal token in [the Axiom settings](https://cloud.axiom.co/settings/profile) and export it as `AXIOM_TOKEN`. Set `AXIOM_ORG_ID` to the organization ID from the settings page of the organization you want to access.
+Otherwise create a personal token in [the Axiom settings](https://app.axiom.co/profile) and export it as `AXIOM_TOKEN`. Set `AXIOM_ORG_ID` to the organization ID from the settings page of the organization you want to access.
 
 You can also configure the client using options passed to the constructor of the Client:
 
@@ -62,8 +62,8 @@ Distributed under the [MIT License](LICENSE).
 
 <!-- Badges -->
 
-[workflow]: https://github.com/axiomhq/axiom-node/actions/workflows/push.yml
-[workflow_badge]: https://img.shields.io/github/workflow/status/axiomhq/axiom-node/CI?ghcache=unused
+[workflow]: https://github.com/axiomhq/axiom-node/actions/workflows/ci.yml
+[workflow_badge]: https://img.shields.io/github/actions/workflow/status/axiomhq/axiom-node/ci.yml?branch=main&ghcache=unused
 [release]: https://github.com/axiomhq/axiom-node/releases/latest
 [release_badge]: https://img.shields.io/github/release/axiomhq/axiom-node.svg?ghcache=unused
 [license]: https://opensource.org/licenses/MIT
