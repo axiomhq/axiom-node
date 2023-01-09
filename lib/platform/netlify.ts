@@ -1,4 +1,4 @@
-import { LogEvent, PlatformInfo } from '../logger';
+import { LogEvent, PlatformInfo } from '../logging';
 import type Provider from './base';
 import GenericConfig from './generic';
 
@@ -41,7 +41,7 @@ export default class NetlifyConfig extends GenericConfig implements Provider {
       source: source + '-log',
       siteId: netlifySiteId,
       buildId: netlifyBuildId,
-      context: netlifyContext,
+      // context: netlifyContext,
       deploymentUrl: netlifyDeploymentUrl,
       deploymentId: source === 'edge' ? process.env.DENO_DEPLOYMENT_ID : netlifyDeploymentId,
     };

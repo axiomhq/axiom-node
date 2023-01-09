@@ -9,7 +9,7 @@ export default class GenericConfig implements Provider {
   isBrowser = typeof window !== 'undefined';
   shoudSendEdgeReport = false;
   token = process.env.AXIOM_TOKEN;
-  dataset = process.env.AXIOM_DATASET;
+  dataset = process.env.AXIOM_DATASET || '';
   environment: string = process.env.NODE_ENV || '';
   axiomUrl = process.env.AXIOM_URL || 'https://cloud.axiom.co';
   region = process.env.REGION || undefined;

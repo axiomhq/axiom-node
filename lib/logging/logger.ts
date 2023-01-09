@@ -1,7 +1,7 @@
-import { throttle } from 'shared';
+import { throttle } from '../shared';
 import Client from '../client';
 import config from '../config';
-import { DEFAULT_LOG_LEVEL, LogEvent, Logging, LogLevel, RequestReport } from '.';
+import { DEFAULT_LOG_LEVEL, LogEvent, Logging, LogLevel, RequestReport } from './logging';
 import { prettyPrint } from './prettyPrint';
 
 
@@ -9,7 +9,7 @@ export class Logger implements Logging {
     public logEvents: LogEvent[] = [];
     throttledSendLogs = throttle(this.sendLogs, 1000);
     children: Logger[] = [];
-    public logLevel: string;
+    public logLevel: keyof typeof LogLevel = 'debug'
     client: Client;
 
     constructor(
@@ -17,10 +17,13 @@ export class Logger implements Logging {
         private req: RequestReport | null = null,
         private autoFlush: Boolean = true,
         public source: 'frontend' | 'lambda' | 'edge' = 'frontend',
-        logLevel?: string,
+        logLevel?: keyof typeof LogLevel,
     ) {
         this.client = new Client();
-        const newLocal = (this.logLevel = logLevel || DEFAULT_LOG_LEVEL || 'debug');
+
+        const defaultLogLevel: string = DEFAULT_LOG_LEVEL || 'debug';
+        // TODO: Fix
+        // this.logLevel = logLevel ? LogLevel[logLevel] : LogLevel[defaultLogLevel as keyof typeof LogLevel];
     }
 
     debug = (message: string, args: { [key: string]: any } = {}) => {
@@ -46,7 +49,7 @@ export class Logger implements Logging {
         return new Logger({ ...this.args }, req, this.autoFlush, this.source);
     };
 
-    log = (level: string, message: string, args: { [key: string]: any } = {}) => {
+    log = (level: keyof typeof LogLevel, message: string, args: { [key: string]: any } = {}) => {
         if (LogLevel[level] < LogLevel[this.logLevel]) {
             return;
         }

@@ -1,11 +1,11 @@
-import config from 'config';
-import { isNoPrettyPrint } from 'shared';
-import { LogEvent } from '.';
+import config from '../config';
+import { isNoPrettyPrint } from '../shared';
+import { LogEvent } from '../logging';
 
 const levelColors: {[key: string]: any} = {
     info: {
         terminal: '32',
-        browser: 'lightgreen',
+        browser: 'darkgreen',
     },
     debug: {
         terminal: '36',
