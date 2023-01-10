@@ -1,22 +1,13 @@
-export const DEFAULT_LOG_LEVEL = process.env.AXIOM_LOG_LEVEL || 'debug';
-
 export interface LogEvent {
     level: string;
     message: string;
     fields: {};
     _time: string;
-    request?: RequestReport;
-    platform?: PlatformInfo;
-    vercel?: PlatformInfo;
-    netlify?: PlatformInfo;
-}
-
-export enum LogLevel {
-    debug = 0,
-    info = 1,
-    warn = 2,
-    error = 3,
-    off = 100,
+    [key: string]: any;
+    // request?: RequestReport;
+    // platform?: PlatformInfo;
+    // vercel?: PlatformInfo;
+    // netlify?: PlatformInfo;
 }
 
 export interface RequestReport {

@@ -1,13 +1,13 @@
 import { NextWebVitalsMetric } from 'next/app';
-import config from '../lib/config';
+import config from './config';
 
 import { NextConfig, NextApiHandler, NextApiResponse, NextApiRequest } from 'next';
 import { NextFetchEvent, NextMiddleware, NextRequest } from 'next/server';
 import { NextMiddlewareResult } from 'next/dist/server/web/types';
-import { RequestReport } from '../lib/logging/logging';
-import { Logger } from '../lib/logging/logger';
+import { RequestReport } from 'axiom-node/dist/logging';
+import { Logger } from 'axiom-node';
 import { Rewrite } from 'next/dist/lib/load-custom-routes';
-import { EndpointType } from '../lib/shared';
+import { EndpointType } from 'axiom-node/dist/logging';
 
 declare global {
     var EdgeRuntime: string;
@@ -36,7 +36,7 @@ function withAxiomNextConfig(nextConfig: NextConfig): NextConfig {
             const webVitalsEndpoint = config.getIngestURL(EndpointType.webVitals);
             const logsEndpoint = config.getIngestURL(EndpointType.logs);
             if (!webVitalsEndpoint && !logsEndpoint) {
-                const log = new Logger();
+                const log = new Logger({}, config.dataset);
                 log.warn(
                     'axiom: Envvars not detected. If this is production please see https://github.com/axiomhq/next-axiom for help',
                 );
@@ -125,7 +125,8 @@ export type AxiomApiHandler = (
 function withAxiomNextApiHandler(handler: NextApiHandler): NextApiHandler {
     return async (req, res) => {
         const report: RequestReport = config.generateRequestMeta(req);
-        const logger = new Logger({}, report, false, 'lambda');
+        const logger = new Logger({}, config.dataset, {}, false, 'lambda');
+        logger.extendLogEventsWith({ request: report })
         const axiomRequest = req as AxiomAPIRequest;
         axiomRequest.log = logger;
         const [wrappedRes, allPromises] = interceptNextApiResponse(axiomRequest, res);
@@ -164,7 +165,8 @@ function withAxiomNextEdgeFunction(handler: NextMiddleware): NextMiddleware {
             userAgent: req.headers.get('user-agent'),
         };
 
-        const logger = new Logger({}, report, false, 'edge');
+        const logger = new Logger({}, config.dataset, {}, false, 'edge');
+        logger.extendLogEventsWith({ request: report });
         const axiomRequest = req as AxiomRequest;
         axiomRequest.log = logger;
 
@@ -189,9 +191,10 @@ function withAxiomNextEdgeFunction(handler: NextMiddleware): NextMiddleware {
 }
 
 function logEdgeReport(report: any) {
-    if (config.shoudSendEdgeReport) {
+    // TODO: handle differnet config per platform
+    // if (config.shoudSendEdgeReport) {
         console.log(`AXIOM_EDGE_REPORT::${JSON.stringify(report)}`);
-    }
+    // }
 }
 
 type WithAxiomParam = NextConfig | NextApiHandler | NextMiddleware;

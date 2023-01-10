@@ -1,5 +1,4 @@
-import config from '../config';
-import { isNoPrettyPrint } from '../shared';
+import { isBrowser, isNoPrettyPrint } from '../logging/shared';
 import { LogEvent } from '../logging';
 
 const levelColors: {[key: string]: any} = {
@@ -39,7 +38,7 @@ export function prettyPrint(ev: LogEvent) {
     let msgString = '';
     let args: any[] = [ev.level, ev.message];
 
-    if (config.isBrowser) {
+    if (isBrowser) {
         msgString = '%c%s - %s';
         args = [`color: ${levelColors[ev.level].browser};`, ...args];
     } else {

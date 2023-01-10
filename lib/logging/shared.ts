@@ -1,3 +1,4 @@
+export const isBrowser = typeof window !== 'undefined';
 export const isNoPrettyPrint = process.env.AXIOM_NO_PRETTY_PRINT == 'true' ? true : false;
 
 export enum EndpointType {

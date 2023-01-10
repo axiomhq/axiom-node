@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiResponse } from 'next'
-import { withAxiom, AxiomAPIRequest } from 'axiom-node/dist/adapters/nextjs'
+import { withAxiom, AxiomAPIRequest } from 'next-axiom'
 
 async function handler(req: AxiomAPIRequest, res: NextApiResponse) {
   req.log.info('Hello from function', { url: req.url });

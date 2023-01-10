@@ -8,7 +8,7 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "axiom-node": "file:../../"
+    "nuxt-axiom": "file:../../"
   },
   "devDependencies": {
     "nuxt": "3.0.0"

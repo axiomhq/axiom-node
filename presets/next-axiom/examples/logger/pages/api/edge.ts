@@ -1,4 +1,4 @@
-import { withAxiom, AxiomRequest } from 'axiom-node/dist/adapters/nextjs'
+import { withAxiom, AxiomRequest } from 'next-axiom'
 
 export const config = {
     runtime: 'experimental-edge',

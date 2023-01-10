@@ -1,5 +1,4 @@
-import { Logger } from "./logger";
-
 export { Logger } from "./logger";
 export { LogEvent, RequestReport, PlatformInfo } from './logging';
-export const log = new Logger()
+export { EndpointType } from './shared';
+// export const log = new Logger();

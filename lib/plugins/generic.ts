@@ -1,10 +1,10 @@
 import { LogEvent, RequestReport } from "../logging";
-import { EndpointType } from "../shared";
-import type Provider from "./base";
+import { EndpointType } from "../logging/shared";
+import type AxiomPlugin from "./plugin";
 
 // This is the generic config class for all platforms that doesn't have a special
 // implementation (e.g: vercel, netlify). All config classes extends this one.
-export default class GenericConfig implements Provider {
+export default class GenericConfig implements AxiomPlugin {
   proxyPath = '/_axiom';
   isBrowser = typeof window !== 'undefined';
   shoudSendEdgeReport = false;
@@ -41,12 +41,13 @@ export default class GenericConfig implements Provider {
     }))
   }
 
-  injectPlatformMetadata(logEvent: LogEvent, source: string) {
+  extendLogEvent(logEvent: LogEvent, source: string) {
     logEvent.platform = {
       environment: this.environment,
       region: this.region,
       source: source + '-log',
     };
+    return logEvent;
   }
 
   // TODO: get from framework if possible, e.g: NextApiRequest

@@ -1,7 +1,7 @@
-import { log } from 'axiom-node'
+import { log } from 'next-axiom'
 import {AppProps} from "next/app";
 
-// export { reportWebVitals } from 'axiom-node/adapters/nextjs'
+export { reportWebVitals } from 'next-axiom'
 
 log.info('Hello from frontend', { foo: 'bar' })
 

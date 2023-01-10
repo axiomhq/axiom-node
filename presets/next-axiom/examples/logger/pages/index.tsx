@@ -1,4 +1,4 @@
-import { log } from 'axiom-node'
+import { log } from 'next-axiom'
 import { GetStaticProps } from 'next'
 import useSWR from 'swr'
 
