@@ -6,9 +6,14 @@ const logger = winston.createLogger({
     format: winston.format.json(),
     defaultMeta: { service: 'user-service' },
     transports: [
-        // You can pass an option here, if you don't the transport is configured
-        // using environment variables like `AXIOM_DATASET` and `AXIOM_TOKEN`
-        new AxiomTransport(),
+        new AxiomTransport({
+            dataset: 'my-dataset', // defaults to process.env.AXIOM_DATASET
+            token: 'my-token', // defaults to process.env.AXIOM_TOKEN
+            orgId: 'my-org-id', // defaults to process.env.AXIOM_ORG_ID
+            onError: (err: Error) => {
+                /* ... */
+            }, // defaults to console.error
+        }),
     ],
 });
 

@@ -7,6 +7,7 @@ export interface WinstonOptions extends TransportStreamOptions {
     token?: string;
     orgId?: string;
     url?: string;
+    onError?: (err: Error) => void;
 }
 
 export class WinstonTransport extends Transport {
@@ -15,11 +16,13 @@ export class WinstonTransport extends Transport {
     batch: object[] = [];
     batchCallback: (err: Error | null) => void = () => {};
     batchTimeoutId?: NodeJS.Timeout;
+    onError: (err: Error) => void;
 
     constructor(opts?: WinstonOptions) {
         super(opts);
         this.client = new Client(opts);
         this.dataset = opts?.dataset || process.env.AXIOM_DATASET || '';
+        this.onError = opts?.onError || console.error;
     }
 
     log(info: any, callback: () => void) {
@@ -64,6 +67,9 @@ export class WinstonTransport extends Transport {
         this.client
             .ingestEvents(this.dataset, batchCopy)
             .then((_res) => callback(null))
-            .catch(callback);
+            .catch((err) => {
+                this.onError(err);
+                callback(err);
+            });
     }
 }
