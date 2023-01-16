@@ -1,5 +1,5 @@
+import { LogEvent } from '../logging';
 const isBrowser = typeof window !== 'undefined';
-import { LogEvent } from '../logger/src/logging';
 
 const levelColors: {[key: string]: any} = {
     info: {

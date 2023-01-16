@@ -16,8 +16,6 @@
   "scripts": {
     "build": "tsc",
     "prepare": "npm run build",
-    "format": "prettier --write src/*.ts __tests__/*.ts",
-    "check-format": "prettier -c src/*.ts __tests__/*.ts",
     "test": "jest"
   },
   "repository": {
@@ -38,17 +36,7 @@
   "peerDependencies": {
     "next": "^12.1.4 || ^13"
   },
-  "devDependencies": {
-    "@types/jest": "^27.5.1",
-    "@types/node": "^17.0.29",
-    "jest": "^28.1.0",
-    "jest-environment-jsdom": "^28.1.0",
-    "prettier": "2.6.2",
-    "ts-jest": "^28.0.2",
-    "ts-node": "^10.8.0",
-    "typescript": "^4.6.4"
-  },
   "dependencies": {
-    "axiom-js-logger": "file:../axiom-js-logger"
+    "axiom-js-logger": "*"
   }
 }

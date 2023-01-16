@@ -3,14 +3,7 @@ import { AxiomTransport } from "./transport";
 
 export { Logger } from "./logger";
 export { LogEvent, EndpointType } from './logging';
-import ConfigProvider from './config-provider/config_provider'
-export { ConfigProvider }
-import GenericConfigProvider from './config-provider/generic_provider'
-export { GenericConfigProvider }
-import VercelConfigProvider from './config-provider/vercel_provider'
-export { VercelConfigProvider }
-import NetlifyConfigProvider from './config-provider/netlify_provider'
-export { NetlifyConfigProvider }
+export * from './config-provider';
 
 
 // createLogger provides a way to quickly create a logger with default transports

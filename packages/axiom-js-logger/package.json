@@ -16,7 +16,6 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "build": "tsc",
-        "lint": "eslint '{lib,examples}/**/*.{js,ts}' --quiet --fix",
         "prepublish": "npm run build",
         "test": "mocha -r ts-node/register tests/unit/**/*.test.ts",
         "cover": "nyc -r text -e .ts -x 'tests/unit/**/*.test.ts' npm run test",

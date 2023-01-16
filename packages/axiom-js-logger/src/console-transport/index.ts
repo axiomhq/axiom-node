@@ -1,4 +1,5 @@
-import Transport from '../logger/src/transport';
+import { LogEvent } from '../logging';
+import Transport from '../transport';
 import { prettyPrint } from './prettyPrint';
 
 class ConsoleTransport implements Transport {
@@ -8,11 +9,11 @@ class ConsoleTransport implements Transport {
         },
     ) {}
 
-    send(events) {
+    send(events: LogEvent[]) {
         events.map((event) => this._print(event));
     }
 
-    _print(ev) {
+    _print(ev: LogEvent) {
         // check whether pretty print is disabled
         if (this.config) {
             const hasFields = Object.keys(ev.fields).length > 0;
