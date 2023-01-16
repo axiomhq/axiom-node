@@ -1,6 +1,9 @@
 // This is the generic config class for all platforms that doesn't have a special
+
+import ConfigProvider from "./config_provider";
+
 // implementation (e.g: vercel, netlify). All config classes extends this one.
-export class GenericConfigProvider {
+export default class GenericConfigProvider implements ConfigProvider {
     axiomUrl = process.env.AXIOM_URL || 'https://cloud.axiom.co';
     shoudSendEdgeReport = false;
 
@@ -10,9 +13,7 @@ export class GenericConfigProvider {
         return !!(this.axiomUrl && process.env.AXIOM_DATASET && process.env.AXIOM_TOKEN);
     }
 
-    getIngestURL = (): string {
-        return `${this.axiomUrl}/api/v1/datasets/${this.getDataset()}/ingest`;
-    }
+    getIngestURL = () => `${this.axiomUrl}/api/v1/datasets/${this.getDataset()}/ingest`;
 
     getDataset(): string | undefined {
         return process.env.AXIOM_DATASET;
@@ -30,7 +31,7 @@ export class GenericConfigProvider {
         return process.env.REGION 
     }
 
-    getMeta() {
+    getMeta(req: any): any {
         return {
             platform: {
                 environment: this.getEnvironment(),

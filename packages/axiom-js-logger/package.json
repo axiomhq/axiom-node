@@ -37,7 +37,7 @@
     },
     "homepage": "https://github.com/axiomhq/axiom-js",
     "dependencies": {
-        "axiom-js": "file:../axim-js"
+        "axiom-js": "file:../axiom-js"
     },
     "devDependencies": {
         "@types/chai": "^4.3.1",

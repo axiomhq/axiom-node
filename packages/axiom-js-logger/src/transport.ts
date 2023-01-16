@@ -1,4 +1,4 @@
-import Client, { ClientOptions } from "../../axiom-js/src";
+import Client, { ClientOptions } from "axiom-js";
 import { LogEvent } from "./logging";
 
 export default interface Transport {

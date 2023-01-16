@@ -1,34 +1,30 @@
-import { GenericConfigProvider } from "./generic_provider";
+import ConfigProvider from './config_provider';
 
 const ingestEndpoint = process.env.NEXT_PUBLIC_AXIOM_INGEST_ENDPOINT || process.env.AXIOM_INGEST_ENDPOINT || '';
+const isBrowser = typeof window !== 'undefined';
 
-export default class VercelConfig extends GenericConfigProvider {
-    provider = 'vercel';
-    shoudSendEdgeReport = true;
+export default class VercelConfigProvider implements ConfigProvider {
     region = process.env.VERCEL_REGION || undefined;
     environment = process.env.VERCEL_ENV || process.env.NODE_ENV || '';
-    token = undefined;
     axiomUrl = ingestEndpoint;
-
-    constructor() {
-        super()
-    }
 
     isEnvVarsSet(): boolean {
         return ingestEndpoint != undefined && ingestEndpoint != '';
     }
 
-    getIngestURL(t: EndpointType) {
+    getDataset = () => 'vercel'
+
+    getIngestURL(): string {
+        if (isBrowser) {
+            return `/_axiom/logs`;
+        }
         const url = new URL(this.axiomUrl);
-        url.searchParams.set('type', t.toString());
+        // TODO: find a solution for vercel to get log type
+        url.searchParams.set('type', 'log');
         return url.toString();
     }
 
-    getWebVitalsEndpoint(): string {
-        return `${this.proxyPath}/web-vitals`;
-    }
-
-    getMeta() {
+    getMeta(req: any) {
         return {
             vercel: {
                 environment: this.environment,
@@ -36,4 +32,6 @@ export default class VercelConfig extends GenericConfigProvider {
             },
         };
     }
+
+    shouldSendEdgeReport = () => true;
 }

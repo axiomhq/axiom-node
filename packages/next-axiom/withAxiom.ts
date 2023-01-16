@@ -1,4 +1,4 @@
-import config, { RequestReport } from './config';
+import config from './config';
 
 import { NextConfig, NextApiHandler, NextApiResponse, NextApiRequest } from 'next';
 import { NextFetchEvent, NextMiddleware, NextRequest } from 'next/server';
@@ -10,6 +10,21 @@ declare global {
     var EdgeRuntime: string;
 }
 
+const proxyPath = "/_axiom";
+
+export interface RequestReport {
+    startTime: number;
+    statusCode?: number;
+    ip?: string;
+    region?: string;
+    path: string;
+    host: string;
+    method: string;
+    scheme: string;
+    userAgent?: string | null;
+  }
+  
+
 function withAxiomNextConfig(nextConfig: NextConfig): NextConfig {
     return {
         ...nextConfig,
@@ -19,7 +34,7 @@ function withAxiomNextConfig(nextConfig: NextConfig): NextConfig {
             const webVitalsEndpoint = config.getIngestURL();
             const logsEndpoint = config.getIngestURL();
             if (!webVitalsEndpoint && !logsEndpoint) {
-                const log = createLogger({dataset: config.dataset})
+                const log = createLogger({dataset: config.getDataset()})
                 log.warn(
                     'axiom: Envvars not detected. If this is production please see https://github.com/axiomhq/next-axiom for help',
                 );
@@ -30,12 +45,12 @@ function withAxiomNextConfig(nextConfig: NextConfig): NextConfig {
 
             const axiomRewrites: Rewrite[] = [
                 {
-                    source: `${config.proxyPath}/web-vitals`,
+                    source: `${proxyPath}/web-vitals`,
                     destination: webVitalsEndpoint,
                     basePath: false,
                 },
                 {
-                    source: `${config.proxyPath}/logs`,
+                    source: `${proxyPath}/logs`,
                     destination: logsEndpoint,
                     basePath: false,
                 },
@@ -107,8 +122,10 @@ export type AxiomApiHandler = (
 
 function withAxiomNextApiHandler(handler: NextApiHandler): NextApiHandler {
     return async (req, res) => {
-        const report: RequestReport = config.generateRequestMeta(req);
-        const logger = createLogger({ dataset: config.dataset, source: 'lambda', meta: { request: report } })
+        // TODO: generate report
+        // const report: RequestReport = config.generateRequestMeta(req);
+        const report = {}
+        const logger = createLogger({ dataset: config.getDataset(), source: 'lambda', meta: { request: report } })
         // const logger = new Logger({}, config.dataset, {}, false, 'lambda');
         // logger.extendLogEventsWith({ request: report })
         const axiomRequest = req as AxiomAPIRequest;
@@ -148,7 +165,7 @@ function withAxiomNextEdgeFunction(handler: NextMiddleware): NextMiddleware {
             scheme: req.nextUrl.protocol.replace(':', ''),
             userAgent: req.headers.get('user-agent'),
         };
-        const logger = createLogger({ dataset: config.dataset, source: 'edge', meta: { request: report }})
+        const logger = createLogger({ dataset: config.getDataset(), source: 'edge', meta: { request: report }})
         const axiomRequest = req as AxiomRequest;
         axiomRequest.log = logger;
 

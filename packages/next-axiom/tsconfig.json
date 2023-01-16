@@ -34,7 +34,9 @@
   },
   "include": [
     "index.ts",
-    "withAxiom.ts"
+    "logger.ts",
+    "withAxiom.ts",
+    "web-vitals.ts"
   ],
   "exclude": [
     "node_modules",

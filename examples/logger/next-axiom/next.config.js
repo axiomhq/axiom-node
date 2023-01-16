@@ -1,7 +1,7 @@
 // @ts-check
 
 /** @type {import('next').NextConfig} */
-const { withAxiom } = require('axiom-node/dist/adapters/nextjs');
+const { withAxiom } = require('next-axiom');
 
 const nextConfig = withAxiom({
   reactStrictMode: true,

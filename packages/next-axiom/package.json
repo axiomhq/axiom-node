@@ -49,6 +49,6 @@
     "typescript": "^4.6.4"
   },
   "dependencies": {
-    "axiom-js-logger": "file:../logger"
+    "axiom-js-logger": "file:../axiom-js-logger"
   }
 }

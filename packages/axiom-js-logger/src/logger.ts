@@ -1,12 +1,12 @@
 import { throttle } from './throttle';
 import { LogEvent, Logging } from './logging';
 import { DEFAULT_LOG_LEVEL, LogLevel } from "./logLevel";
-import Client, { ClientOptions } from '../../axiom-js/src/';
+import { ClientOptions } from 'axiom-js';
 import Transport from './transport';
 
 
 export interface LoggerConfig {
-    transports: Transport[],
+    transports?: Transport[],
     // for using AxiomTransport by default
     dataset?: string,
     clientOptions?: ClientOptions,
@@ -26,7 +26,6 @@ export class Logger implements Logging {
     throttledSendLogs = throttle(this.sendLogs, 1000);
     children: Logger[] = [];
     public logLevel: keyof typeof LogLevel = 'debug'
-    public client: Client;
     logExtensions = {}
 
     constructor(public config: LoggerConfig)
@@ -38,6 +37,8 @@ export class Logger implements Logging {
         if(!config.source) {
             config.source = 'frontend'
         }
+        // if no transports passed, print a warning
+        console.warn('axiom: no transports were provided, logs will not be sent to Axiom')
     }
 
     debug = (message: string, args: { [key: string]: any } = {}) => {
@@ -100,7 +101,7 @@ export class Logger implements Logging {
             return;
         }
 
-        for(let transport of this.config.transports) {
+        for(let transport of this.config.transports || []) {
             transport.send(this.logEvents)
         }
     }

@@ -12,5 +12,5 @@ export function reportWebVitals(metric: NextWebVitalsMetric) {
         return;
     }
     // TODO: make sure to format the webVitals payload correctly
-    log.info(event)
+    log.info('web-vital', event)
 }
