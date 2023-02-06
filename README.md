@@ -80,7 +80,7 @@ const logger = winston.createLogger({
 ```
 
 
-For further examples, head over to the [examples](examples) directory.
+For further examples, see the [examples](examples) directory.
 
 ## License
 
