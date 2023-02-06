@@ -59,7 +59,7 @@ async function main() {
 ## Using Axiom transport for Winston
 
 You can use Winston logger to send logs to Axiom. First, install the `winston` and `@axiomhq/axiom-node` packages, then
-create a instance of the logger with the AxiomTransport.
+create an instance of the logger with the AxiomTransport.
 
 ```ts
 import winston from 'winston';
