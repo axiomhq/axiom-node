@@ -56,6 +56,30 @@ async function main() {
 }
 ```
 
+## Using Axiom transport for Winston
+
+It is possible to use Winston logger to send logs to Axiom. To do so, install the `winston` and `@axiomhq/axiom-node` packages, then
+create a instance of the logger with the AxiomTransport.
+
+```ts
+import winston from 'winston';
+import { WinstonTransport as AxiomTransport } from '@axiomhq/axiom-node';
+
+const logger = winston.createLogger({
+    level: 'info',
+    format: winston.format.json(),
+    defaultMeta: { service: 'user-service' },
+    transports: [
+        new AxiomTransport({
+            dataset: 'my-dataset', // defaults to process.env.AXIOM_DATASET
+            token: 'my-token', // defaults to process.env.AXIOM_TOKEN
+            orgId: 'my-org-id', // defaults to process.env.AXIOM_ORG_ID
+        }),
+    ],
+});
+```
+
+
 For further examples, head over to the [examples](examples) directory.
 
 ## License
