@@ -43,7 +43,7 @@ const client = new Client({
 Create and use a client like this:
 
 ```ts
-import Client from '@axiomhq/axiom-node';
+import { Client } from '@axiomhq/axiom-node';
 
 async function main() {
   const client = new Client();

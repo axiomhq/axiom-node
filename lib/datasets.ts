@@ -1,4 +1,3 @@
-
 import { AxiosResponse } from 'axios';
 
 import HTTPClient from './httpClient';
@@ -32,8 +31,6 @@ export namespace datasets {
     export interface UpdateRequest {
         description: string;
     }
-
-
 
     interface TrimRequest {
         maxDuration: string;

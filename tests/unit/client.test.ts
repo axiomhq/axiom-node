@@ -1,14 +1,9 @@
 import { fail } from 'assert';
 import nock from 'nock';
 
-import Client, { ContentType, ContentEncoding } from '../../lib/client';
+import { Client, ContentType, ContentEncoding } from '../../lib/client';
 import { AxiomTooManyRequestsError } from '../../lib/httpClient';
-import {
-    headerAPILimit,
-    headerAPIRateRemaining,
-    headerAPIRateReset,
-    headerRateScope,
-} from '../../lib/limit';
+import { headerAPILimit, headerAPIRateRemaining, headerAPIRateReset, headerRateScope } from '../../lib/limit';
 
 const queryLegacyResult = {
     status: {
@@ -81,8 +76,8 @@ describe('Client', () => {
     });
 
     it('Services', () => {
-        expect(client.datasets).toBeTruthy()
-        expect(client.users).toBeTruthy()
+        expect(client.datasets).toBeTruthy();
+        expect(client.users).toBeTruthy();
     });
 
     it('Retries failed 5xx requests', async () => {
@@ -166,14 +161,8 @@ describe('Client', () => {
             cb(null, [200, ingestStatus]);
         });
 
-
         const data = `[{"foo": "bar"}, {"foo": "baz"}]`;
-        const response = await client.ingestString(
-            'test',
-            data,
-            ContentType.JSON,
-            ContentEncoding.Identity,
-        );
+        const response = await client.ingestString('test', data, ContentType.JSON, ContentEncoding.Identity);
         expect(response).not.toEqual('undefined');
         expect(response.ingested).toEqual(2);
         expect(response.failed).toEqual(0);

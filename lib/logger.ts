@@ -1,6 +1,6 @@
 import Transport, { TransportStreamOptions } from 'winston-transport';
 
-import Client from './client';
+import { Client } from './client';
 
 export interface WinstonOptions extends TransportStreamOptions {
     dataset?: string;
