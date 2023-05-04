@@ -1,6 +1,6 @@
 import winston from 'winston';
 
-import Client from '../../lib/client';
+import { Client } from '../../lib/client';
 import { WinstonTransport as AxiomTransport } from '../../lib/logger';
 
 const datasetSuffix = process.env.AXIOM_DATASET_SUFFIX || 'local';
@@ -25,7 +25,6 @@ describe('WinstonTransport', () => {
     afterAll(async () => {
         const resp = await client.datasets.delete(datasetName);
         expect(resp.status).toEqual(204);
-        
     });
 
     it('sends logs to Axiom', async () => {
