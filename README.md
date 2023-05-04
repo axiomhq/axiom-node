@@ -11,9 +11,9 @@
 
 [Axiom](https://axiom.co) unlocks observability at any scale.
 
-- **Ingest with ease, store without limits:** Axiom’s next-generation datastore enables ingesting petabytes of data with ultimate efficiency. Ship logs from Kubernetes, AWS, Azure, Google Cloud, DigitalOcean, Nomad, and others.
-- **Query everything, all the time:** Whether DevOps, SecOps, or EverythingOps, query all your data no matter its age. No provisioning, no moving data from cold/archive to “hot”, and no worrying about slow queries. All your data, all. the. time.
-- **Powerful dashboards, for continuous observability:** Build dashboards to collect related queries and present information that’s quick and easy to digest for you and your team. Dashboards can be kept private or shared with others, and are the perfect way to bring together data from different sources
+-   **Ingest with ease, store without limits:** Axiom’s next-generation datastore enables ingesting petabytes of data with ultimate efficiency. Ship logs from Kubernetes, AWS, Azure, Google Cloud, DigitalOcean, Nomad, and others.
+-   **Query everything, all the time:** Whether DevOps, SecOps, or EverythingOps, query all your data no matter its age. No provisioning, no moving data from cold/archive to “hot”, and no worrying about slow queries. All your data, all. the. time.
+-   **Powerful dashboards, for continuous observability:** Build dashboards to collect related queries and present information that’s quick and easy to digest for you and your team. Dashboards can be kept private or shared with others, and are the perfect way to bring together data from different sources
 
 For more information check out the [official documentation](https://axiom.co/docs)
 and our
@@ -46,13 +46,11 @@ Create and use a client like this:
 import { Client } from '@axiomhq/axiom-node';
 
 async function main() {
-  const client = new Client();
+    const client = new Client();
 
-  await client.ingestEvents('my-dataset', [
-    { 'foo': 'bar'},
-  ]);
+    await client.ingestEvents('my-dataset', [{ foo: 'bar' }]);
 
-  const res = await client.query(`['my-dataset'] | where foo == 'bar' | limit 100`);
+    const res = await client.query(`['my-dataset'] | where foo == 'bar' | limit 100`);
 }
 ```
 
@@ -79,6 +77,44 @@ const logger = winston.createLogger({
 });
 ```
 
+### Error, exception and rejection handling
+
+If you want to log `Error`s, we recommend using the
+[`winston.format.errors`](https://github.com/winstonjs/logform#errors)
+formatter, for example like this:
+
+```ts
+import winston from 'winston';
+import { WinstonTransport as AxiomTransport } from '@axiomhq/axiom-node';
+
+const { combine, errors, stack } = winston.format;
+
+const axiomTransport = new AxiomTransport({ ... });
+const logger = winston.createLogger({
+  // 8<----snip----
+  format: combine(errors({ stack: true }), json()),
+  // 8<----snip----
+});
+```
+
+To automatically log exceptions and rejections, add the Axiom transport to the
+[`exceptionHandlers`](https://github.com/winstonjs/winston#exceptions) and
+[`rejectionHandlers`](https://github.com/winstonjs/winston#rejections) like
+this:
+
+```ts
+import winston from 'winston';
+import { WinstonTransport as AxiomTransport } from '@axiomhq/axiom-node';
+
+const axiomTransport = new AxiomTransport({ ... });
+const logger = winston.createLogger({
+  // 8<----snip----
+  transports: [axiomTransport],
+  exceptionHandlers: [axiomTransport],
+  rejectionHandlers: [axiomTransport],
+  // 8<----snip----
+});
+```
 
 For further examples, see the [examples](examples) directory.
 
