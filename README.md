@@ -97,7 +97,7 @@ const logger = winston.createLogger({
 });
 ```
 
-To automatically log exceptions and rejections, add the Axiom transport to the
+To automatically log uncaught exceptions and rejections, add the Axiom transport to the
 [`exceptionHandlers`](https://github.com/winstonjs/winston#exceptions) and
 [`rejectionHandlers`](https://github.com/winstonjs/winston#rejections) like
 this:
