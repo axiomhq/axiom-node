@@ -86,28 +86,40 @@ jobs:
     needs: build
     if: github.event.pull_request.head.repo.full_name == github.repository
     strategy:
+      fail-fast: true
       matrix:
         node:
           - 16.x
           - 17.x
           - 18.x
           - 19.x
+        environment:
+            - development
+            - staging
+        include:
+            - environment: development
+              url: TESTING_DEV_API_URL
+              token: TESTING_DEV_TOKEN
+              org_id: TESTING_DEV_ORG_ID
+            - environment: staging
+              url: TESTING_STAGING_API_URL
+              token: TESTING_STAGING_TOKEN
+              org_id: TESTING_STAGING_ORG_ID
       max-parallel: 1
-      fail-fast: false
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: ${{ matrix.node }}
-      - uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: ${{ runner.os }}-node-
-      - run: npm install
-      - env:
-          AXIOM_TOKEN: ${{ secrets.TESTING_STAGING_TOKEN }}
-          AXIOM_URL: ${{ secrets.TESTING_STAGING_API_URL }}
-          AXIOM_ORG_ID: ${{ secrets.TESTING_STAGING_ORG_ID }}
-          AXIOM_DATASET_SUFFIX: ${{ github.run_id }}-${{ matrix.node }}
-        run: npm run integration
+        - uses: actions/checkout@v2
+        - uses: actions/setup-node@v2
+          with:
+            node-version: ${{ matrix.node }}
+        - uses: actions/cache@v2
+          with:
+            path: ~/.npm
+            key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+            restore-keys: ${{ runner.os }}-node-
+        - run: npm install
+        - env:
+            AXIOM_URL: ${{ secrets[matrix.url] }}
+            AXIOM_TOKEN: ${{ secrets[matrix.token] }}
+            AXIOM_ORG_ID: ${{ secrets[matrix.org_id] }}
+            AXIOM_DATASET_SUFFIX: ${{ github.run_id }}-${{ matrix.node }}
+          run: npm run integration
