@@ -24,11 +24,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
-      - uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: ${{ runner.os }}-node-
+          cache: npm
+          cache-dependency-path: package-lock.json
       - run: npm install
       - run: npm run build
 
@@ -48,11 +45,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
-      - uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: ${{ runner.os }}-node-
+          cache: npm
+          cache-dependency-path: package-lock.json
       - run: npm install
       - run: npm run lint
 
@@ -72,11 +66,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node }}
-      - uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: ${{ runner.os }}-node-
+          cache: npm
+          cache-dependency-path: package-lock.json
       - run: npm install
       - run: npm run test
 
@@ -111,11 +102,8 @@ jobs:
         - uses: actions/setup-node@v3
           with:
             node-version: ${{ matrix.node }}
-        - uses: actions/cache@v3
-          with:
-            path: ~/.npm
-            key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-            restore-keys: ${{ runner.os }}-node-
+            cache: npm
+            cache-dependency-path: package-lock.json
         - run: npm install
         - env:
             AXIOM_URL: ${{ secrets[matrix.url] }}
