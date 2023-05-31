@@ -7,15 +7,18 @@ async function sleep(ms: number) {
 
 describe('Batch', () => {
     it('sends events after 1s', async () => {
+        jest.useFakeTimers();
         const sendFn = jest.fn();
 
         const batch = new Batch(sendFn, 'my-dataset', { timestampField: 'foo' });
         batch.ingest({ foo: 'bar' });
         batch.ingest({ foo: 'baz' });
 
-        await sleep(500);
-        expect(sendFn).toHaveBeenCalledTimes(0);
-        await sleep(600);
+        expect(sendFn).not.toHaveBeenCalled();
+        jest.runAllTimers();
+        jest.useRealTimers();
+        await sleep(100); // async code yay
+
         expect(sendFn).toHaveBeenCalledTimes(1);
     });
 
@@ -34,15 +37,17 @@ describe('Batch', () => {
     });
 
     it('sends events after 1s when ingesting one event every 100ms', async () => {
+        jest.useFakeTimers();
         const sendFn = jest.fn();
 
         const batch = new Batch(sendFn, 'my-dataset', { timestampField: 'foo' });
 
         for (let i = 0; i < 10; i++) {
             batch.ingest({ foo: 'bar' });
-            await sleep(120);
+            jest.advanceTimersByTime(120);
         }
 
+        jest.useRealTimers();
         await sleep(100); // just make sure we have enough time
         expect(sendFn).toHaveBeenCalledTimes(1);
     });
