@@ -54,6 +54,29 @@ async function main() {
 }
 ```
 
+## Sending events in batches
+
+Sending many individual events can affect deliverability. You can use built-in
+batching suport like this:
+
+```ts
+import { Client } from '@axiomhq/axiom-node';
+
+async function main() {
+    const client = new Client();
+
+    const batch = client.createBatch('my-dataset');
+    batch.ingestEvents({ foo: 'bar' });
+    batch.ingestEvents({ foo: 'bar' });
+
+    await batch.flush();
+}
+```
+
+This will send events once a second has passed or you added 1k events, whatever
+happens first.
+Make sure to `flush()` on exit to ensure all events are sent.
+
 ## Using Axiom transport for Winston
 
 You can use Winston logger to send logs to Axiom. First, install the `winston` and `@axiomhq/axiom-node` packages, then
