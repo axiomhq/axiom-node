@@ -19,7 +19,7 @@ export class Batch {
         this.options = options;
     }
 
-    ingest = (events: Array<object> | object) => {
+    ingestEvents = (events: Array<object> | object) => {
         if (Array.isArray(events)) {
             this.events = this.events.concat(events);
         } else {

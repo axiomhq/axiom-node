@@ -11,8 +11,8 @@ describe('Batch', () => {
         const sendFn = jest.fn();
 
         const batch = new Batch(sendFn, 'my-dataset', { timestampField: 'foo' });
-        batch.ingest({ foo: 'bar' });
-        batch.ingest({ foo: 'baz' });
+        batch.ingestEvents({ foo: 'bar' });
+        batch.ingestEvents({ foo: 'baz' });
 
         expect(sendFn).not.toHaveBeenCalled();
         jest.runAllTimers();
@@ -29,7 +29,7 @@ describe('Batch', () => {
 
         let events = [];
         for (let i = 0; i < 1000; i++) {
-            batch.ingest({ foo: 'bar' });
+            batch.ingestEvents({ foo: 'bar' });
         }
 
         await sleep(100); // just make sure we have enough time
@@ -43,7 +43,7 @@ describe('Batch', () => {
         const batch = new Batch(sendFn, 'my-dataset', { timestampField: 'foo' });
 
         for (let i = 0; i < 10; i++) {
-            batch.ingest({ foo: 'bar' });
+            batch.ingestEvents({ foo: 'bar' });
             jest.advanceTimersByTime(120);
         }
 
@@ -58,7 +58,7 @@ describe('Batch', () => {
         const batch = new Batch(sendFn, 'my-dataset', { timestampField: 'foo' });
 
         for (let i = 0; i < 10; i++) {
-            batch.ingest({ foo: 'bar' });
+            batch.ingestEvents({ foo: 'bar' });
         }
 
         expect(sendFn).toHaveBeenCalledTimes(0);
