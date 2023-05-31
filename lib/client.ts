@@ -1,5 +1,6 @@
 import { datasets } from './datasets';
 import { users } from './users';
+import { Batch } from './batch';
 import HTTPClient, { ClientOptions } from './httpClient';
 import { gzip } from 'zlib';
 import { promisify } from 'util';
@@ -64,6 +65,10 @@ export class Client extends HTTPClient {
         const json = array.map((v) => JSON.stringify(v)).join('\n');
         const encoded = await promisify(gzip)(json);
         return this.ingestBuffer(id, encoded, ContentType.NDJSON, ContentEncoding.GZIP, options);
+    };
+
+    createBatch = (id: string, options?: IngestOptions): Batch => {
+        return new Batch(this.ingestEvents, id, options);
     };
 
     queryLegacy = (id: string, query: QueryLegacy, options?: QueryOptions): Promise<QueryLegacyResult> =>
