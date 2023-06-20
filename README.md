@@ -1,5 +1,4 @@
-> *Info:* Check out [axiom-js](https://github.com/axiomhq/axiomjs), our new cross-platform solution with JavaScript SDKs and libraries. `axiom-node` will be deprecated August 1st 2023.
-> 
+> **Note** Check out [axiom-js](https://github.com/axiomhq/axiomjs), our new cross-platform solution with JavaScript SDKs and libraries.
 
 ![axiom-node: The official NodeJS bindings for the Axiom API](.github/images/banner-dark.svg#gh-dark-mode-only)
 ![axiom-node: The official NodeJS bindings for the Axiom API](.github/images/banner-light.svg#gh-light-mode-only)
