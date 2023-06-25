@@ -1,3 +1,5 @@
+> **Note** Check out [axiom-js](https://github.com/axiomhq/axiom-js), our new cross-platform solution with JavaScript SDKs and libraries.
+
 ![axiom-node: The official NodeJS bindings for the Axiom API](.github/images/banner-dark.svg#gh-dark-mode-only)
 ![axiom-node: The official NodeJS bindings for the Axiom API](.github/images/banner-light.svg#gh-light-mode-only)
 
