@@ -89,7 +89,7 @@ formatter, for example like this:
 import winston from 'winston';
 import { WinstonTransport as AxiomTransport } from '@axiomhq/axiom-node';
 
-const { combine, errors, stack } = winston.format;
+const { combine, errors, json } = winston.format;
 
 const axiomTransport = new AxiomTransport({ ... });
 const logger = winston.createLogger({
